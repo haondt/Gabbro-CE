@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  db:
+    extends:
+      file: ../overrides.yml
+      service: db
+    image: postgres
+    volumes:
+      - tmp:/var/lib/postgresql/data
+    environment:
+      YOOO: $SOMETHING
+volumes:
+  tmp:

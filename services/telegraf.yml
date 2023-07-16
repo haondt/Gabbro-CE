@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  telegraf:
+    <<: *telegraf_overrides
+    <<: *base_service
+    <<: *docker_sock_service
+    image: telegraf:latest
+    volumes:
+      - /sys:/rootfs/sys:ro
+
+

@@ -1,0 +1,6 @@
+version: "3.8"
+x-service-header:
+  service: &service
+    extends:
+      file: overides.yml
+      service: {{ COM_GABBRO_SERVICE }}

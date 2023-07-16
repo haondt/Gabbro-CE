@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  base:
+    container_name: {{ COM_GABBRO_SERVICE }}
+    labels:
+      com.obsidian.host: {{ COM_GABBRO_HOST }}
+      com.obsidian.service: {{ COM_GABBRO_SERVICE }}
+    environment:
+      PGID: {{ COM_GABBRO_PGID }}
+      PUID: {{ COM_GABBRO_PUID }}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+
+x-service-docker-sock: &s-docker
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    - /var/lib/docker/volumes:/var/lib/docker/volumes
+

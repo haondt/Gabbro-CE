@@ -1,0 +1,4 @@
+ansible
+GitPython
+PyYaml
+requests

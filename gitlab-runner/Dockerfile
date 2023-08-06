@@ -9,9 +9,11 @@ RUN apt-get update -y && \
 	sudo \
 	wget \
 	curl \
-	sshpass
+	sshpass \
+	tree
 
 RUN apt-get clean
 
 RUN pip install --upgrade pip
-RUN pip install ansible
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt

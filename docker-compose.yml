@@ -28,7 +28,7 @@ services:
       COM_GABBRO_INFISICAL_HOST: "infisical"
       COM_GABBRO_DNS_HOST: "${COM_GABBRO_DNS_HOST}"
     volumes:
-      - gitlab-runner-data:/etc/gitlab-runner/
+      - gitlab-runner-1-data:/etc/gitlab-runner/
       - ./gitlab-runner/config-1.toml:/etc/gitlab-runner/config.toml
     networks:
       - infisical
@@ -45,7 +45,7 @@ services:
       COM_GABBRO_INFISICAL_HOST: "infisical"
       COM_GABBRO_DNS_HOST: "${COM_GABBRO_DNS_HOST}"
     volumes:
-      - gitlab-runner-data:/etc/gitlab-runner/
+      - gitlab-runner-2-data:/etc/gitlab-runner/
       - ./gitlab-runner/config-2.toml:/etc/gitlab-runner/config.toml
     networks:
       - infisical
@@ -91,7 +91,8 @@ services:
       - nginx
       - infisical
 volumes:
-  gitlab-runner-data:
+  gitlab-runner-1-data:
+  gitlab-runner-2-data:
   portainer-data:
   infisical-mongo-data:
 networks:

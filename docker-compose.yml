@@ -90,6 +90,16 @@ services:
     networks:
       - nginx
       - infisical
+  gabbro-bot:
+    build:
+      context: ./gabbro-bot
+    container_name: gabbro-bot
+    environment:
+      COM_GABBRO_DISCORD_TOKEN: "${COM_GABBRO_DISCORD_TOKEN}"
+      COM_GABBRO_DOCKER_HOST: "${COM_GABBRO_DOCKER_HOST}"
+      COM_GABBRO_DOCKER_USER: "${COM_GABBRO_DOCKER_USER}"
+      COM_GABBRO_DOCKER_PASSWORD: "${COM_GABBRO_DOCKER_PASSWORD}"
+      COM_GABBRO_DOCKER_PATH: "${COM_GABBRO_DOCKER_PATH}"
 volumes:
   gitlab-runner-1-data:
   gitlab-runner-2-data:

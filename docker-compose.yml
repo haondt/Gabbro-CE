@@ -85,11 +85,30 @@ services:
     container_name: nginx
     ports:
       - 80:80
+      - 443:443
     volumes:
+      - nginx-certs:/etc/nginx/certs
+      - nginx-vhost:/etc/nginx/vhost.d
+      - nginx-html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
       - nginx
       - infisical
+  nginx-acme:
+    container_name: nginx-acme
+    networks:
+      - nginx
+    image: nginxproxy/acme-companion
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - nginx-acmesh:/etc/acme.sh
+      - smallstep-data:/srv/step
+    environment:
+      DEFAULT_EMAIL: mail@noahburghardt.ca
+      ACME_CA_URI: https://smallstep:9000/acme/acme/directory
+      CA_BUNDLE: /srv/step/certs/root_ca.crt
   gabbro-bot:
     build:
       context: ./gabbro-bot
@@ -111,16 +130,33 @@ services:
         max-file: "5"
         max-size: "1g"
     environment:
-      VIRTUAL_HOST: vaultwarden.${COM_GABBRO_DOMAIN}
+      VIRTUAL_HOST: "vaultwarden.${COM_GABBRO_DOMAIN}"
+      LETSENCRYPT_HOST: "vaultwarden.${COM_GABBRO_DOMAIN}"
       VIRTUAL_PORT: 80
     volumes:
       - /srv/vw-data/:/data
+  smallstep:
+    networks:
+      - nginx
+    container_name: smallstep
+    image: smallstep/step-ca
+    volumes:
+      - smallstep-data:/home/step
+    environment:
+      DOCKER_STEPCA_INIT_NAME: Smallstep
+      DOCKER_STEPCA_INIT_DNS_NAMES: "smallstep,localhost,$(hostname -f),smallstep.${COM_GABBRO_DOMAIN}"
+      DOCKER_STEPCA_INIT_ACME: true
 
 volumes:
+  smallstep-data:
   gitlab-runner-1-data:
   gitlab-runner-2-data:
   portainer-data:
   infisical-mongo-data:
+  nginx-certs:
+  nginx-vhost:
+  nginx-html:
+  nginx-acmesh:
 
 networks:
   infisical:

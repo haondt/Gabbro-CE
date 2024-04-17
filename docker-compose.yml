@@ -94,12 +94,15 @@ services:
       JweSettings__SigningKey: "${COM_GABBRO_GSM_SIGNING_KEY}"
       MongoDbSettings__ConnectionString: "mongodb://${COM_GABBRO_GSM_MONGO_USERNAME}:${COM_GABBRO_GSM_MONGO_PASSWORD}@gabbro-secret-manager-mongo:27017"
       MongoDbSettings__DatabaseName: "${COM_GABBRO_GSM_MONGO_DATABASE_NAME}"
+      AuthenticationSettings__UseSecureCookies: false
       VIRTUAL_HOST: "gsm.${COM_GABBRO_DOMAIN}"
       VITRUAL_PORT: 8080
   gabbro-secret-manager-mongo:
     image: mongo
     networks:
       - gabbro-secret-manager
+    # ports:
+      # - 27017:27017
     volumes:
       - gabbro-secret-manager-data:/data/db
     container_name: gabbro-secret-manager-mongo

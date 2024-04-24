@@ -15,40 +15,6 @@ services:
     environment:
       VIRTUAL_HOST: "portainer.${COM_GABBRO_DOMAIN}"
       VIRTUAL_PORT: 9000
-  gitlab-runner-1:
-    build:
-      context: ./gitlab-runner
-    container_name: gitlab-runner-1
-    labels:
-      com.obsidian.host: "${COM_GABBRO_HOST}"
-      com.obsidian.service: "gitlab-runner-1"
-    group_add:
-      - "${COM_GABBRO_PGID}"
-    environment:
-      COM_GABBRO_INFISICAL_HOST: "infisical"
-      COM_GABBRO_DNS_HOST: "${COM_GABBRO_DNS_HOST}"
-    volumes:
-      - gitlab-runner-1-data:/etc/gitlab-runner/
-      - ./gitlab-runner/config-1.toml:/etc/gitlab-runner/config.toml
-    networks:
-      - infisical
-  gitlab-runner-2:
-    build:
-      context: ./gitlab-runner
-    container_name: gitlab-runner-2
-    labels:
-      com.obsidian.host: "${COM_GABBRO_HOST}"
-      com.obsidian.service: "gitlab-runner-2"
-    group_add:
-      - "${COM_GABBRO_PGID}"
-    environment:
-      COM_GABBRO_INFISICAL_HOST: "infisical"
-      COM_GABBRO_DNS_HOST: "${COM_GABBRO_DNS_HOST}"
-    volumes:
-      - gitlab-runner-2-data:/etc/gitlab-runner/
-      - ./gitlab-runner/config-2.toml:/etc/gitlab-runner/config.toml
-    networks:
-      - infisical
   infisical:
     image: infisical/infisical:latest
     container_name: infisical

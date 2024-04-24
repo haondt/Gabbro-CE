@@ -1,4 +1,0 @@
-ansible-core
-GitPython
-PyYaml
-requests

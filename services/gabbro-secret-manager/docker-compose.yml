@@ -1,0 +1,33 @@
+services:
+  gabbro-secret-manager:
+    image: registry.gitlab.com/haondt/cicd/registry/gabbro-secret-manager:latest
+    container_name: gabbro-secret-manager
+    networks:
+      - gabbro-secret-manager
+      - nginx
+    depends_on:
+      - gabbro-secret-manager-mongo
+    environment:
+      JweSettings__EncryptionKey: "{{ GSM_ENCRYPTION_KEY }}"
+      JweSettings__SigningKey: "{{ GSM_SIGNING_KEY }}"
+      MongoDbSettings__ConnectionString: "mongodb://admin:{{ GSM_MONGO_PASSOWRD }}@gabbro-secret-manager-mongo:27017"
+      MongoDbSettings__DatabaseName: gsm
+      AuthenticationSettings__UseSecureCookies: false
+      VIRTUAL_HOST: "gsm.gabbro-ce"
+      VITRUAL_PORT: 8080
+  gabbro-secret-manager-mongo:
+    image: mongo
+    networks:
+      - gabbro-secret-manager
+    # ports:
+      # - 27017:27017
+    volumes:
+      - gabbro-secret-manager-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: "{{ GSM_MONGO_PASSWORD }}"
+      MONGO_INITDB_DATABASE: gsm
+networks:
+  gabbro-secret-manager:
+volumes:
+  gabbro-secret-manager-data:

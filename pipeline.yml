@@ -1,0 +1,8 @@
+tasks:
+  - type: docker-deploy
+    target: gabbro
+    auto:
+      - source: push
+      - source: web
+
+

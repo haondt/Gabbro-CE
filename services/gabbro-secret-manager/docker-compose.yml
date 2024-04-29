@@ -10,7 +10,7 @@ services:
     environment:
       JweSettings__EncryptionKey: "{{ GSM_ENCRYPTION_KEY }}"
       JweSettings__SigningKey: "{{ GSM_SIGNING_KEY }}"
-      MongoDbSettings__ConnectionString: "mongodb://admin:{{ GSM_MONGO_PASSOWRD }}@gabbro-secret-manager-mongo:27017"
+      MongoDbSettings__ConnectionString: "mongodb://admin:{{ GSM_MONGO_PASSWORD }}@gabbro-secret-manager-mongo:27017"
       MongoDbSettings__DatabaseName: gsm
       AuthenticationSettings__UseSecureCookies: false
       VIRTUAL_HOST: "gsm.gabbro-ce"

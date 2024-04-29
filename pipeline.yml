@@ -3,6 +3,6 @@ tasks:
     target: gabbro
     auto:
       - source: push
-      - source: web
+        branch: main
 
 

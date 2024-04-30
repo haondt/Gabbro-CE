@@ -1,4 +1,3 @@
-
 services:
   gabbro-bot:
     image: registry.gitlab.com/haondt/cicd/registry/gabbro-bot:latest

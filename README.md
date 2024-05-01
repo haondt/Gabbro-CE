@@ -6,3 +6,4 @@ The following subdomains need to be mapped in dns
 
 - `portainer.gabbro-ce`
 - `infisical.gabbro-ce`
+

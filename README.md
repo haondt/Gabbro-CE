@@ -5,5 +5,5 @@ This is the cloud environment (CE) for Gabbro, my home server. The intent is for
 The following subdomains need to be mapped in dns
 
 - `portainer.gabbro-ce`
-- `infisical.gabbro-ce`
+- `gsm.gabbro-ce`
 

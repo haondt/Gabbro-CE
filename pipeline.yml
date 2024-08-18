@@ -1,6 +1,6 @@
 tasks:
   - type: docker-deploy
-    target: docker@docker-gabbro-ce
+    target: flint@flint
     key: $TARGET_SSH_KEY
     auto:
       - source: push

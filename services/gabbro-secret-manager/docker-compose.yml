@@ -13,7 +13,7 @@ services:
       MongoDbSettings__ConnectionString: "mongodb://admin:{{ GSM_MONGO_PASSWORD }}@gabbro-secret-manager-mongo:27017"
       MongoDbSettings__DatabaseName: gsm
       AuthenticationSettings__UseSecureCookies: false
-      VIRTUAL_HOST: "gsm.gabbro-ce"
+      VIRTUAL_HOST: "gsm.flint"
       VITRUAL_PORT: 8080
   gabbro-secret-manager-mongo:
     image: mongo

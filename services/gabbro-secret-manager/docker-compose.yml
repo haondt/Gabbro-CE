@@ -1,32 +1,30 @@
 services:
   gabbro-secret-manager:
-    image: registry.gitlab.com/haondt/cicd/registry/gabbro-secret-manager:latest
+    image: registry.gitlab.com/haondt/cicd/registry/gabbro-secret-manager:1.1.0
     container_name: gabbro-secret-manager
     networks:
       - gabbro-secret-manager
       - nginx
     depends_on:
-      - gabbro-secret-manager-mongo
+      - gabbro-secret-manager-postgres
     environment:
       JweSettings__EncryptionKey: "{{ GSM_ENCRYPTION_KEY }}"
       JweSettings__SigningKey: "{{ GSM_SIGNING_KEY }}"
-      MongoDbSettings__ConnectionString: "mongodb://admin:{{ GSM_MONGO_PASSWORD }}@gabbro-secret-manager-mongo:27017"
-      MongoDbSettings__DatabaseName: gsm
+      PersistenceSettings__Driver: postgres
+      PostgreSQLSettings__ConnectionString: "host=gabbro-secret-manager-postgres;Username=gsm;Password={{ GSM_POSTGRES_PASSWORD }};Database=gsm"
       AuthenticationSettings__UseSecureCookies: false
       VIRTUAL_HOST: "gsm.flint"
       VITRUAL_PORT: 8080
-  gabbro-secret-manager-mongo:
-    image: mongo
+  gabbro-secret-manager-postgres:
+    image: postgres
     networks:
       - gabbro-secret-manager
-    # ports:
-      # - 27017:27017
     volumes:
-      - gabbro-secret-manager-data:/data/db
+      - gabbro-secret-manager-data:/var/lib/postgresql/data
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: "{{ GSM_MONGO_PASSWORD }}"
-      MONGO_INITDB_DATABASE: gsm
+      POSTGRES_USER: gsm
+      POSTGRES_PASSWORD: "{{ GSM_POSTGRES_PASSWORD }}"
+    shm_size: 128mb
 networks:
   gabbro-secret-manager:
 volumes:

@@ -5,9 +5,36 @@ services:
     container_name: nginx
     ports:
       - 80:80
+      - 443:443
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - nginx-certs:/etc/nginx/certs
+      - nginx-vhost:/etc/nginx/vhost.d
     networks:
       - nginx
+
+  nginx-acme:
+    container_name: nginx-acme
+    image: nginxproxy/acme-companion
+    volumes_from:
+      - nginx
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - nginx-acmesh:/etc/acme.sh
+    environment:
+      DEFAULT_EMAIL: "{{ DEFAULT_EMAIL }}"
+      ACME_CHALLENGE: DNS-01
+      ACMESH_DNS_API_CONFIG: |-
+        DNS_API: dns_cf
+        CF_Token: {{ CF_TOKEN }}
+        CF_Zone_ID: {{ CF_ZONE_ID }}
+        CF_Account_ID: {{ CF_ACCOUNT_ID }}
+
 networks:
   nginx:
+
+volumes:
+  nginx-certs:
+  nginx-vhost:
+  nginx-acmesh:
+

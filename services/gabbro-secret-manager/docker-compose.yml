@@ -13,8 +13,10 @@ services:
       PersistenceSettings__Driver: postgres
       PostgreSQLSettings__ConnectionString: "host=gabbro-secret-manager-postgres;Username=gsm;Password={{ GSM_POSTGRES_PASSWORD }};Database=gsm"
       AuthenticationSettings__UseSecureCookies: false
-      VIRTUAL_HOST: "gsm.flint"
       VITRUAL_PORT: 8080
+      VIRTUAL_HOST: "gsm.{{ COM_GABBRO_HOST }},gsm.{{ LETSENCRYPT_HOST }}"
+      LETSENCRYPT_HOST: "*.{{ LETSENCRYPT_HOST }}"
+
   gabbro-secret-manager-postgres:
     image: postgres
     networks:
